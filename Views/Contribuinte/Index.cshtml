@@ -1,0 +1,50 @@
+﻿@model IEnumerable<BeneficioContribuinte.Models.Contribuinte>
+
+@{
+    ViewData["Title"] = "Lista de Contribuintes";
+}
+
+<h1>Contribuintes</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Adicionar Novo Contribuinte
+    </a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>CNPJ</th>
+            <th>Razão Social</th>
+            <th>Possui Benefícios</th>
+            <th>Regime de Tributação</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var contribuinte in Model)
+        {
+            <tr>
+                <td>@(Convert.ToUInt64(contribuinte.CNPJ).ToString(@"00\.000\.000\/0000\-00"))</td>
+                <td>@contribuinte.RazaoSocial</td>
+                <td>@(contribuinte.PossuiBeneficio ? "Sim" : "Não")</td>
+                <td>@contribuinte.RegimeTributacao</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@contribuinte.Id" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i> Editar
+                    </a>
+
+                    <a asp-action="Delete" asp-route-id="@contribuinte.Id" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Excluir
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="mt-3">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+        <i class="bi bi-house"></i> Voltar à Página Principal
+    </a>
+</div>

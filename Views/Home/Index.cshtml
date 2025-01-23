@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Página Inicial";
+}
+
+<h1 class="text-center">Sistema de Gerenciamento de Benefícios e Contribuintes</h1>
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Benefícios -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="text-center">Gerenciar Benefícios</h4>
+                </div>
+                <div class="card-body text-center">
+                    <p>Visualize, adicione, edite ou exclua os benefícios cadastrados.</p>
+                    <a asp-controller="Beneficio" asp-action="Index" class="btn btn-primary">
+                        <i class="bi bi-box-arrow-in-right"></i> Visualizar Benefícios
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contribuintes -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4 class="text-center">Gerenciar Contribuintes</h4>
+                </div>
+                <div class="card-body text-center">
+                    <p>Visualize, adicione, edite ou exclua os contribuintes cadastrados.</p>
+                    <a asp-controller="Contribuinte" asp-action="Index" class="btn btn-success">
+                        <i class="bi bi-box-arrow-in-right"></i> Visualizar Contribuintes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

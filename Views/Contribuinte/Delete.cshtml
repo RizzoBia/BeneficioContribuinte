@@ -1,0 +1,64 @@
+﻿@model BeneficioContribuinte.Models.Contribuinte
+
+@{
+    ViewData["Title"] = "Excluir Contribuinte";
+}
+
+<h1>Excluir Contribuinte</h1>
+
+<hr />
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.CNPJ)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.CNPJ)
+    </dd>
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.RazaoSocial)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.RazaoSocial)
+    </dd>
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.DataAbertura)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.DataAbertura)
+    </dd>
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.RegimeTributacao)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.RegimeTributacao)
+    </dd>
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.PossuiBeneficio)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.PossuiBeneficio)
+    </dd>
+
+    @if (Model.PossuiBeneficio)
+    {
+        <dt class="col-sm-2">
+            Benefício
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.Beneficio != null ? Model.Beneficio.Nome : "Nenhum benefício associado")
+        </dd>
+    }
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <p>Tem certeza de que deseja excluir este contribuinte?</p>
+    </div>
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
+</form>

@@ -1,0 +1,113 @@
+﻿@model BeneficioContribuinte.Models.Contribuinte
+
+@{
+    ViewData["Title"] = "Editar Contribuinte";
+    var regimes = new List<string> { "Variável", "MEI", "MEEPP" };
+}
+
+<h1>Editar Contribuinte</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" id="editForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group mb-3">
+                <label asp-for="CNPJ" class="control-label"></label>
+                <input asp-for="CNPJ" class="form-control cnpj-mask" id="CNPJ" />
+                <span asp-validation-for="CNPJ" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="RazaoSocial" class="control-label"></label>
+                <input asp-for="RazaoSocial" class="form-control" />
+                <span asp-validation-for="RazaoSocial" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="DataAbertura" class="control-label"></label>
+                <input asp-for="DataAbertura" class="form-control" type="date" />
+                <span asp-validation-for="DataAbertura" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="RegimeTributacao" class="control-label"></label>
+                @foreach (var regime in regimes)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="RegimeTributacao" value="@regime" id="regime-@regime" 
+                               @(Model.RegimeTributacao.Contains(regime) ? "checked" : "") />
+                        <label class="form-check-label" for="regime-@regime">
+                            @regime
+                        </label>
+                    </div>
+                }
+                <span asp-validation-for="RegimeTributacao" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="PossuiBeneficio" class="control-label"></label>
+                <input asp-for="PossuiBeneficio" type="checkbox" class="form-check-input" id="possuiBeneficio" 
+                       checked="@(Model.PossuiBeneficio ? "checked" : "")" />
+                <span asp-validation-for="PossuiBeneficio" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" id="beneficioSelect" style="display: @(Model.PossuiBeneficio ? "block" : "none");">
+                <label for="BeneficioId">Selecione o Benefício</label>
+                <select asp-for="BeneficioId" asp-items="ViewBag.BeneficioId" class="form-control">
+                    <option value="">Selecione um benefício</option>
+                </select>
+                <span asp-validation-for="BeneficioId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            </div>
+        </form>
+
+        <div class="mt-4">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-house"></i> Voltar
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('possuiBeneficio').addEventListener('change', function () {
+            var beneficioSelect = document.getElementById('beneficioSelect');
+            beneficioSelect.style.display = this.checked ? "block" : "none";
+        });
+
+        document.getElementById('editForm').addEventListener('submit', function () {
+            var cnpjInput = document.getElementById('CNPJ');
+            cnpjInput.value = cnpjInput.value.replace(/\D/g, '');
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.cnpj-mask').mask('00.000.000/0000-00');
+
+            $('#possuiBeneficio').change(function () {
+                var beneficioSelect = $('#beneficioSelect');
+                if ($(this).is(':checked')) {
+                    beneficioSelect.show();
+                } else {
+                    beneficioSelect.hide();
+                }
+            });
+            $('#possuiBeneficio').trigger('change');
+            $('form').submit(function () {
+                var cnpj = $('.cnpj-mask').val().replace(/\D/g, '');
+                $('.cnpj-mask').val(cnpj);
+            });
+        });
+    </script>
+}
